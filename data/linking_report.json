@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-01-23T03:30:44.734454",
+  "stats": {
+    "total_incidents": 22780,
+    "already_linked": 0,
+    "newly_linked": 0,
+    "no_match": 22780,
+    "link_rate": "0.0%"
+  },
+  "match_types": {
+    "no_name": 22780
+  }
+}
