@@ -1,0 +1,182 @@
+{
+  "generatedAt": "2026-03-09T03:32:30.447044+00:00",
+  "app": {
+    "entrypoint": "index.html",
+    "script": "assets/index-BfLy6p76.js",
+    "stylesheet": "assets/index-D5WdD-vB.css"
+  },
+  "datasets": [
+    {
+      "path": "data/officers.parquet",
+      "shippingStatus": "live_bundle",
+      "loadedBy": "assets/index-BfLy6p76.js",
+      "rowCount": 6620,
+      "columnCount": 25,
+      "sourceTagCounts": {
+        "ccrb": 1000,
+        "legacy_watchlist": 32,
+        "post_board": 596,
+        "structured_agency_record": 4992
+      },
+      "stateCounts": {
+        "AK": 2,
+        "AL": 2,
+        "AR": 2,
+        "AZ": 4,
+        "CA": 534,
+        "CO": 5,
+        "CT": 2,
+        "DC": 3,
+        "DE": 2,
+        "FL": 17,
+        "GA": 6,
+        "HI": 2,
+        "IA": 1,
+        "ID": 2,
+        "IL": 8,
+        "IN": 33,
+        "KS": 2,
+        "KY": 4,
+        "LA": 5,
+        "MA": 3344,
+        "MD": 5,
+        "ME": 1,
+        "MI": 3,
+        "MN": 8,
+        "MO": 3,
+        "MS": 2,
+        "MT": 2,
+        "NC": 4,
+        "ND": 2,
+        "NE": 1,
+        "NH": 2,
+        "NJ": 4,
+        "NM": 2,
+        "NV": 3,
+        "NY": 1002,
+        "OH": 13,
+        "OK": 2,
+        "OR": 3,
+        "PA": 4,
+        "RI": 2,
+        "SC": 2,
+        "SD": 2,
+        "TN": 4,
+        "TX": 14,
+        "UT": 2,
+        "VA": 4,
+        "VT": 1,
+        "WA": 1503,
+        "WI": 4,
+        "WV": 2,
+        "WY": 2
+      },
+      "departmentFilledCount": 5580,
+      "badgeMissingCount": 5051,
+      "notes": [
+        "Normalized placeholder badge numbers to null.",
+        "Replaced incorrect blanket officer state values with identifier-derived state codes when deterministic.",
+        "Filled department only when it was safely inferable from the shipped identifier.",
+        "Added provenance and bundle-role tags for auditability."
+      ]
+    },
+    {
+      "path": "data/incidents.parquet",
+      "shippingStatus": "live_bundle",
+      "loadedBy": "assets/index-BfLy6p76.js",
+      "rowCount": 22780,
+      "columnCount": 28,
+      "sourceTagCounts": {
+        "fatal_encounters": 22111,
+        "indy_open_data": 669
+      },
+      "notes": [
+        "Added source-family tags from stable record ID prefixes.",
+        "Marked non-live incident parquet variants as pipeline artifacts."
+      ]
+    },
+    {
+      "path": "data/incidents_enriched.parquet",
+      "shippingStatus": "auxiliary_not_loaded",
+      "loadedBy": null,
+      "rowCount": 22780,
+      "columnCount": 28,
+      "sourceTagCounts": {
+        "fatal_encounters": 22111,
+        "indy_open_data": 669
+      },
+      "notes": [
+        "Added source-family tags from stable record ID prefixes.",
+        "Marked non-live incident parquet variants as pipeline artifacts."
+      ]
+    },
+    {
+      "path": "data/incidents_linked.parquet",
+      "shippingStatus": "auxiliary_not_loaded",
+      "loadedBy": null,
+      "rowCount": 22780,
+      "columnCount": 29,
+      "sourceTagCounts": {
+        "fatal_encounters": 22111,
+        "indy_open_data": 669
+      },
+      "notes": [
+        "Added source-family tags from stable record ID prefixes.",
+        "Marked non-live incident parquet variants as pipeline artifacts."
+      ]
+    },
+    {
+      "path": "data/linking_report.json",
+      "shippingStatus": "auxiliary_not_loaded",
+      "loadedBy": null,
+      "sizeBytes": 235,
+      "notes": [
+        "Pipeline artifact summarizing the current incident-to-officer linking run.",
+        "Not loaded by the live dashboard bundle."
+      ]
+    },
+    {
+      "path": "alerts.json",
+      "shippingStatus": "auxiliary_not_loaded",
+      "loadedBy": null,
+      "topLevelKeys": [
+        "alerts",
+        "generatedBy",
+        "lastUpdated",
+        "totalAlerts"
+      ],
+      "sizeBytes": 9938,
+      "recordCount": 25
+    },
+    {
+      "path": "all_states.json",
+      "shippingStatus": "auxiliary_not_loaded",
+      "loadedBy": null,
+      "topLevelKeys": [
+        "lastUpdated",
+        "states",
+        "totalArticles",
+        "totalStates"
+      ],
+      "sizeBytes": 9997,
+      "recordCount": 510,
+      "stateCount": 51
+    },
+    {
+      "path": "states/",
+      "shippingStatus": "auxiliary_not_loaded",
+      "loadedBy": null,
+      "sizeBytes": 387162,
+      "recordCount": 51,
+      "notes": [
+        "State news feed shards used by research/news workflows.",
+        "Not referenced by the active dashboard bundle in index.html."
+      ]
+    }
+  ],
+  "notes": [
+    "The active dashboard bundle loads only data/officers.parquet and data/incidents.parquet.",
+    "Auxiliary JSON/news files remain in-repo but are explicitly tagged as not loaded by the live dashboard.",
+    "Officer provenance is only upgraded when the shipped identifier makes the source family deterministic."
+  ]
+}

@@ -38,36 +38,69 @@
     <a href="index.html" class="back">← Back to Home</a>
 
     <h1>Privacy Policy</h1>
-    <p>Last updated: February 2026</p>
+    <p>Last updated: March 9, 2026</p>
 
-    <p>BlueLedger ("we", "our", or "us") operates the BlueLedger mobile application and website. This page informs you
-        of our policies regarding the collection, use, and disclosure of personal data.</p>
+    <p>BlueLedger is a civic transparency dashboard. This policy covers the dashboard bundle currently shipped in this
+        repository and describes what the site loads, what data it stores, and what it does not collect.</p>
 
-    <h2>1. Information We Collect</h2>
-    <p>We do not collect personal identification information (PII) such as names or addresses unless you voluntarily
-        contact us. We may collect non-personal analytics data to improve app stability and performance (e.g., crash
-        logs via Firebase Crashlytics).</p>
+    <h2>1. What the Current Dashboard Does</h2>
+    <p>The current dashboard is a read-only viewer. It does not provide account creation, user profiles, direct
+        messaging, ad targeting, in-app purchases, or user-submitted publishing flows.</p>
 
-    <h2>2. Location Data</h2>
-    <p>Our app processes location data locally on your device to display relevant incidents in your area. This precise
-        location data is not transmitted to our servers or stored by us.</p>
+    <h2>2. Personal Data We Do Not Request</h2>
+    <p>The shipped dashboard does not ask you to provide your name, phone number, mailing address, government ID,
+        contact list, camera access, microphone access, or precise device location. The current bundle also does not
+        include a login form.</p>
 
-    <h2>3. Data Sources</h2>
-    <p>All data displayed in BlueLedger is sourced from publicly available government records and open data portals.
-        BlueLedger does not create, modify, or endorse any data. For a full list of sources, see our
-        <a href="sources.html">Data Sources</a> page.</p>
+    <h2>3. Data Downloaded When You Load the Dashboard</h2>
+    <p>After you choose to load the dashboard, BlueLedger downloads application assets plus local data files including
+        <code>data/officers.parquet</code> and <code>data/incidents.parquet</code>. Those files are queried locally in
+        your browser using DuckDB WebAssembly so the dashboard can render the officer and incident views.</p>
+    <p>Standard web hosting and CDN providers may still receive ordinary request metadata such as IP address, user
+        agent, and request timing as part of serving files. BlueLedger does not use the current dashboard bundle to
+        build advertising profiles from that information.</p>
 
-    <h2>4. Contact Information</h2>
-    <p>If you contact us via email, we use your email address only to respond to your inquiry.</p>
+    <h2>4. Analytics, Crash Reporting, and Tracking</h2>
+    <p>The shipped dashboard bundle in this repository does not include a mobile analytics SDK, ad SDK, or crash
+        reporting SDK. If that changes in a future release, this policy and the corresponding store disclosures must be
+        updated before release.</p>
 
-    <h2>5. Changes to This Policy</h2>
-    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy
-        Policy on this page.</p>
+    <h2>5. Third-Party Network Requests</h2>
+    <p>When the dashboard loads, the following third-party requests may be made:</p>
+    <ul>
+        <li><strong>Google Fonts</strong> — The dashboard stylesheet loads the Roboto Mono and Inter typefaces from
+            <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>. Google may receive your IP address
+            and user-agent string as part of serving these font files. See
+            <a href="https://developers.google.com/fonts/faq/privacy" target="_blank" rel="noopener">Google Fonts
+                Privacy FAQ</a> for details.</li>
+        <li><strong>DuckDB WebAssembly</strong> — The DuckDB Wasm runtime used for local queries is bundled with the
+            application assets and does not require a separate CDN fetch in the current build.</li>
+    </ul>
+    <p>No data from your browsing session is sent to these services beyond standard HTTP request metadata. BlueLedger
+        does not use these connections to build user profiles or collect analytics.</p>
+
+    <h2>6. Local Processing and Storage</h2>
+    <p>Dashboard queries run locally in the browser session. Your browser may temporarily cache downloaded assets
+        according to normal browser behavior. BlueLedger does not currently expose a personal account area or long-term
+        user data vault in this bundle.</p>
+
+    <h2>7. Dataset Notes</h2>
+    <p>The live dashboard currently displays a mix of public-source incident imports and officer records whose source
+        family is tagged inside the bundle where it can be determined from stable identifiers. Some officer rows remain
+        unverified or derived. See the <a href="sources.html">Data Sources</a> page and the generated
+        <a href="data/manifest.json">data manifest</a> for the current bundle inventory.</p>
+
+    <h2>8. Contact</h2>
+    <p>If you email us, we will use your message and email address only to respond to that request.</p>
+
+    <h2>9. Changes to This Policy</h2>
+    <p>If the shipped bundle changes materially, this page should be updated before release so it remains consistent
+        with Play listing disclosures and the live dashboard behavior.</p>
 
     <h2>Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy, please contact us:</p>
+    <p>Questions about privacy or store disclosures can be sent to:</p>
     <ul>
-        <li>By email: <a href="mailto:blueledger.app@gmail.com">blueledger.app@gmail.com</a></li>
+        <li>By email: <a href="mailto:wtgindy@gmail.com">wtgindy@gmail.com</a></li>
     </ul>
 </body>
 

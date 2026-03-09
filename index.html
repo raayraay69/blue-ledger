@@ -2,14 +2,252 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="BlueLedger Data Noir - Police Accountability Visualization Dashboard" />
-    <title>BlueLedger | Data Noir Dashboard</title>
-    <script type="module" crossorigin src="/blue-ledger/assets/index-BfLy6p76.js"></script>
-    <link rel="stylesheet" crossorigin href="/blue-ledger/assets/index-D5WdD-vB.css">
+    <meta
+      name="description"
+      content="BlueLedger is a police accountability dashboard that loads bundled research data locally in your browser."
+    />
+    <title>BlueLedger Dashboard</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f2efe7;
+        --panel: #fffdf8;
+        --ink: #122033;
+        --muted: #5b6470;
+        --line: #d5cec0;
+        --accent: #0f4c81;
+        --accent-ink: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        background:
+          radial-gradient(circle at top left, rgba(15, 76, 129, 0.14), transparent 34%),
+          linear-gradient(180deg, #f7f2e8 0%, var(--bg) 100%);
+        color: var(--ink);
+      }
+
+      .shell {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+      }
+
+      .panel {
+        width: min(860px, 100%);
+        background: rgba(255, 253, 248, 0.94);
+        border: 1px solid var(--line);
+        box-shadow: 0 18px 40px rgba(18, 32, 51, 0.12);
+        padding: 2rem;
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        letter-spacing: 0.02em;
+      }
+
+      p,
+      li {
+        line-height: 1.6;
+      }
+
+      .eyebrow {
+        font-size: 0.8rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+      }
+
+      .lede {
+        font-size: 1.05rem;
+        color: var(--muted);
+        max-width: 60ch;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin: 1.75rem 0;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 1rem;
+      }
+
+      .card strong {
+        display: block;
+        margin-bottom: 0.4rem;
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+      }
+
+      button,
+      a.link {
+        border: 1px solid var(--accent);
+        background: transparent;
+        color: var(--accent);
+        font: inherit;
+        padding: 0.8rem 1.1rem;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      button.primary {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      .links {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .links a {
+        color: var(--accent);
+      }
+
+      .status {
+        min-height: 1.5rem;
+        margin-top: 1rem;
+        color: var(--muted);
+      }
+
+      .small {
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      #root {
+        display: none;
+      }
+    </style>
   </head>
   <body>
+    <main class="shell">
+      <section class="panel" id="load-gate">
+        <div class="eyebrow">BlueLedger</div>
+        <h1>Local dashboard load notice</h1>
+        <p class="lede">
+          Loading the live dashboard downloads the bundled officer and incident parquet files, the compiled app assets,
+          and a DuckDB WebAssembly runtime used to query the data locally in your browser.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <strong>Approximate download</strong>
+            <span>About 7.5 MB of bundled app/data files, plus the DuckDB runtime fetched at load time.</span>
+          </div>
+          <div class="card">
+            <strong>What the dashboard does not request</strong>
+            <span>No account signup, no precise location, no camera, no microphone, and no contacts access in the
+              shipped bundle.</span>
+          </div>
+          <div class="card">
+            <strong>Current live data bundle</strong>
+            <span>`data/officers.parquet` and `data/incidents.parquet`. Auxiliary JSON/news files stay in-repo but are
+              not loaded by the live dashboard.</span>
+          </div>
+        </div>
+
+        <p class="small">
+          BlueLedger is an independent research project and is not a government app. Some records in the shipped
+          officer bundle are derived or only partially sourced. Review the source notes before relying on any entry.
+        </p>
+
+        <div class="actions">
+          <button class="primary" id="load-dashboard" type="button">Load dashboard</button>
+          <a class="link" href="sources.html">Review source notes</a>
+        </div>
+
+        <div class="links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms</a>
+          <a href="data/manifest.json">Data Manifest</a>
+          <a href="DATA_INVENTORY.md">Data Inventory</a>
+        </div>
+
+        <p class="status" id="load-status" aria-live="polite"></p>
+        <noscript>
+          <p class="status">JavaScript is required to load the dashboard.</p>
+        </noscript>
+      </section>
+    </main>
+
     <div id="root"></div>
+
+    <script>
+      const appScriptPath = "/blue-ledger/assets/index-BfLy6p76.js";
+      const appStylesheetPath = "/blue-ledger/assets/index-D5WdD-vB.css";
+
+      const gate = document.getElementById("load-gate");
+      const loadButton = document.getElementById("load-dashboard");
+      const status = document.getElementById("load-status");
+      const root = document.getElementById("root");
+
+      let started = false;
+
+      function ensureStylesheet() {
+        if (document.querySelector(`link[href="${appStylesheetPath}"]`)) {
+          return;
+        }
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.crossOrigin = "anonymous";
+        link.href = appStylesheetPath;
+        document.head.appendChild(link);
+      }
+
+      function loadDashboard() {
+        if (started) {
+          return;
+        }
+        started = true;
+        loadButton.disabled = true;
+        status.textContent = "Loading dashboard assets and local data bundle...";
+        ensureStylesheet();
+        root.style.display = "block";
+
+        const script = document.createElement("script");
+        script.type = "module";
+        script.crossOrigin = "anonymous";
+        script.src = appScriptPath;
+        script.onload = () => {
+          gate.style.display = "none";
+          status.textContent = "";
+        };
+        script.onerror = () => {
+          started = false;
+          loadButton.disabled = false;
+          root.style.display = "none";
+          status.textContent = "Dashboard failed to load. Check network access and try again.";
+        };
+        document.body.appendChild(script);
+      }
+
+      loadButton.addEventListener("click", loadDashboard);
+    </script>
   </body>
 </html>

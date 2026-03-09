@@ -69,45 +69,102 @@
     <a href="index.html" class="back">← Back to Home</a>
 
     <h1>Data Sources</h1>
-    <p>Last updated: March 2026</p>
+    <p>Last updated: March 9, 2026</p>
 
     <div class="disclaimer">
-        <strong>⚠️ Important:</strong> BlueLedger is an independently developed civic transparency tool. We are
-        <strong>NOT</strong> affiliated with, endorsed by, or authorized by any government agency, law enforcement
-        department, or oversight body. All data below is sourced from publicly available government records.
-        BlueLedger does not create, modify, or alter government records.
+        <strong>Important:</strong> BlueLedger is an independent civic transparency project. The current dashboard
+        bundle does <strong>not</strong> ship as a government product, and the live bundle contains a mix of direct
+        public-source imports, derived officer records, and auxiliary research files. This page distinguishes those
+        categories so the shipped bundle is not overstated as purely official data.
     </div>
 
-    <h2>Official Information Sources</h2>
-    <p>All data displayed in BlueLedger comes exclusively from the following official public sources:</p>
+    <h2>Live Dashboard Bundle</h2>
+    <p>The active dashboard bundle loaded by <code>index.html</code> reads only two data files:
+        <code>data/officers.parquet</code> and <code>data/incidents.parquet</code>. A generated machine-readable
+        inventory is available at <a href="data/manifest.json">data/manifest.json</a>, with a readable summary in
+        <a href="DATA_INVENTORY.md">DATA_INVENTORY.md</a>.</p>
 
-    <h2>New York City, New York</h2>
+    <div class="source-card">
+        <h3><code>data/officers.parquet</code> (6,620 rows)</h3>
+        <p>This file is a mixed officer watchlist dataset. The shipped artifact now tags each row by source family when
+            that can be determined from the stable identifier:</p>
+        <p><strong>Tagged source families in the current bundle:</strong> 4,992 structured agency-record identifiers,
+            1,000 <code>CCRB_*</code> rows, 596 <code>POST_*</code> rows, and 32 legacy watchlist rows that remain
+            unverified in the shipped bundle.</p>
+        <p><strong>Important:</strong> the dashboard uses the unique record ID for officer selection. Badge numbers were
+            missing or placeholder values for most rows and have been normalized accordingly.</p>
+    </div>
+
+    <div class="source-card">
+        <h3><code>data/incidents.parquet</code> (22,780 rows)</h3>
+        <p>This file is a tagged incident bundle composed of two named source families in the current artifact:</p>
+        <p>22,111 records with <code>FE_*</code> identifiers from Fatal Encounters and 669 records with
+            <code>IN_IMPD_*</code> identifiers from Indianapolis / IMPD open-data imports.</p>
+    </div>
+
+    <h2>Named Public Source Families Referenced by the Current Bundle</h2>
+    <div class="source-card">
+        <h3>Fatal Encounters</h3>
+        <p>National incident records used for the majority of the currently shipped incident bundle.</p>
+        <p><a href="https://fatalencounters.org" target="_blank"
+                rel="noopener">https://fatalencounters.org</a></p>
+    </div>
+
+    <div class="source-card">
+        <h3>Indianapolis / IMPD Open Data</h3>
+        <p>Indianapolis Metropolitan Police Department incident imports represented by the <code>IN_IMPD_*</code>
+            identifier family.</p>
+        <p><a href="https://data.indy.gov/datasets/indygov::impd-officer-involved-shootings/about" target="_blank"
+                rel="noopener">https://data.indy.gov/datasets/indygov::impd-officer-involved-shootings/about</a></p>
+    </div>
+
     <div class="source-card">
         <h3>NYC Civilian Complaint Review Board (CCRB)</h3>
-        <p>Complaint and accountability records for NYPD officers from the CCRB data transparency initiative.</p>
+        <p>The shipped officer bundle contains 1,000 <code>CCRB_*</code> identifiers, which are tagged as belonging to
+            the New York City CCRB record family.</p>
         <p><a href="https://www.nyc.gov/site/ccrb/policy/data-transparency-initiative.page" target="_blank"
                 rel="noopener">https://www.nyc.gov/site/ccrb/policy/data-transparency-initiative.page</a></p>
     </div>
 
-    <h2>Chicago, Illinois</h2>
+    <h2>Planned / Reference Sources (Not in Live Bundle)</h2>
+    <div class="disclaimer">
+        <strong>Note:</strong> The following sources are referenced in research materials or planned for future
+        integration, but are <strong>not currently included</strong> in the shipped parquet files. They should not be
+        cited as active data sources for the live dashboard.
+    </div>
     <div class="source-card">
-        <h3>Chicago Civilian Office of Police Accountability (COPA)</h3>
-        <p>Complaint and discipline data for Chicago Police officers.</p>
-        <p><a href="https://www.chicagocopa.org/data-cases/" target="_blank"
-                rel="noopener">https://www.chicagocopa.org/data-cases/</a></p>
+        <h3>Mapping Police Violence</h3>
+        <p>National database of police killings. Planned for future incident enrichment.</p>
+        <p><a href="https://mappingpoliceviolence.org" target="_blank" rel="noopener">https://mappingpoliceviolence.org</a></p>
+    </div>
+    <div class="source-card">
+        <h3>Indiana Gateway (IFIONLINE)</h3>
+        <p>Indiana fiscal transparency portal. Planned for salary/payroll enrichment.</p>
+        <p><a href="https://gateway.ifionline.org" target="_blank" rel="noopener">https://gateway.ifionline.org</a></p>
+    </div>
+    <div class="source-card">
+        <h3>NPI Registry</h3>
+        <p>National Provider Identifier registry. Referenced for cross-entity research only.</p>
+        <p><a href="https://npiregistry.cms.hhs.gov" target="_blank" rel="noopener">https://npiregistry.cms.hhs.gov</a></p>
+    </div>
+
+    <h2>Auxiliary Files Present In-Repo But Not Loaded by the Live Dashboard</h2>
+    <div class="source-card">
+        <h3>Research and News Feed Files</h3>
+        <p><code>alerts.json</code>, <code>all_states.json</code>, and <code>states/*.json</code> remain in the repo as
+            auxiliary research/news assets. They are not referenced by the active dashboard bundle currently loaded from
+            <code>index.html</code>.</p>
     </div>
 
     <h2>Data Disclaimer</h2>
-    <p>BlueLedger displays information from the official public sources listed above and does not create or alter
-        government records. Data is provided "as is" without warranty of any kind. Use of any data is entirely at
-        the user's own risk.</p>
-    <p>BlueLedger is an independent community project and is not affiliated with, endorsed by, or connected to the
-        New York City Civilian Complaint Review Board (CCRB), Chicago COPA, or any government agency.</p>
+    <p>BlueLedger is not an official government database. Some bundled records are derived or only partially sourced in
+        the shipped artifact. Use the bundle for research and transparency only, and verify any critical fact through
+        an authoritative original source.</p>
 
     <h2>Contact Us</h2>
-    <p>If you believe any data is inaccurate or have questions about our sources, contact us:</p>
+    <p>If you believe a bundled source note is inaccurate, contact:</p>
     <ul>
-        <li>By email: <a href="mailto:blueledger.app@gmail.com">blueledger.app@gmail.com</a></li>
+        <li>By email: <a href="mailto:wtgindy@gmail.com">wtgindy@gmail.com</a></li>
     </ul>
 </body>
 
